@@ -1,0 +1,14 @@
+@file:JsQualifier("utils")
+@file:Suppress("INTERFACE_WITH_SUPERCLASS", "OVERRIDING_FINAL_MEMBER", "RETURN_TYPE_MISMATCH_ON_OVERRIDE", "CONFLICTING_OVERLOADS")
+package utils
+
+import kotlin.js.*
+import Buffer
+
+external fun parseKey(keyData: String, passphrase: String = definedExternally): dynamic /* ParsedKey? | Array<ParsedKey>? | Error? */
+
+external fun parseKey(keyData: String): dynamic /* ParsedKey? | Array<ParsedKey>? | Error? */
+
+external fun parseKey(keyData: Buffer, passphrase: String = definedExternally): dynamic /* ParsedKey? | Array<ParsedKey>? | Error? */
+
+external fun parseKey(keyData: Buffer): dynamic /* ParsedKey? | Array<ParsedKey>? | Error? */
