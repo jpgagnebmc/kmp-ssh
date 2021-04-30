@@ -5,15 +5,19 @@ import baremetalcloud.runblockingcommon.runBlockingCommon
 import com.baremetalcloud.kmpfile.File
 import com.baremetalcloud.kmpfile.readText
 import com.baremetalcloud.kmpssh.*
-
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.serialization.json.Json
-import kotlin.jvm.JvmStatic
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class TestSsh : CoroutineScope by GlobalScope {
     @Test
     fun helloWorld() = runBlockingCommon {
+        println("before Env.userHome")
+
+        println("Env.userHome ${Env.userHome}")
+
         val config = Json.decodeFromString(TestSshConfig.serializer(), File("${Env.userHome}/.affair/TestSshConfig.json").readText())
         println("helloWorld START $config")
 

@@ -14,10 +14,25 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
+
+        stage('jvmTest') {
             steps {
                 withGradle {
-                    sh 'gradle build --stacktrace'
+                    sh 'gradle nativeTest --stacktrace'
+                }
+            }
+        }
+        stage('jsTest') {
+            steps {
+                withGradle {
+                    sh 'gradle nativeTest --stacktrace'
+                }
+            }
+        }
+        stage('nativeTest') {
+            steps {
+                withGradle {
+                    sh 'gradle nativeTest --stacktrace'
                 }
             }
         }

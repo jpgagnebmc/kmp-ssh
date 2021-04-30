@@ -5,6 +5,9 @@ import libssh.*
 import platform.posix.size_tVar
 
 
+//TODO: add error handling for missing .ssh/id_rsa
+//TODO: add error handling for host not in known_hosts
+
 @ExperimentalUnsignedTypes
 actual suspend fun com.baremetalcloud.kmpssh.Ssh.exec(cmd: String): SshResult {
     memScoped {
@@ -51,7 +54,7 @@ actual suspend fun com.baremetalcloud.kmpssh.Ssh.exec(cmd: String): SshResult {
             }
             ssh_clean_pubkey_hash(hash.ptr);
 
-            println("ssh_get_error(session).toString() ${ssh_get_error(session).rawValue}")
+            println("!!!ssh_get_error(session).toString() ${ssh_get_error(session)!!.toKString()} ${ssh_get_error(session).rawValue}}")
 
             ssh_userauth_password(session, null, (identity as SshIdentity.Password).password).apply {
                 println("ssh_userauth_password $this")
