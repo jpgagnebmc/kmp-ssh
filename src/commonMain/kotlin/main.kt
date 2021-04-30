@@ -14,7 +14,7 @@ fun main(args: Array<String>) {
 
     runBlockingCommon {
         val config =
-            Json.decodeFromString(TestSshConfig.serializer(), File("/home/jp/.affair/TestSshConfig.json").readText())
+            Json.decodeFromString(TestSshConfig.serializer(), File("~/.affair/TestSshConfig.json").readText())
         println("helloWorld START $config")
 
         val client = com.baremetalcloud.kmpssh.Ssh(
