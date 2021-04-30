@@ -85,9 +85,13 @@ actual suspend fun Ssh.exec(cmd: String): SshResult {
 //                 * It is a possible attack.
 //                SSH_KNOWN_HOSTS_OTHER,
 
-                when(this) {
-                    1 -> { println("SSH_KNOWN_HOSTS_OK")}
-                    0 -> { println("SSH_KNOWN_HOSTS_UNKNOWN") }
+                when (this) {
+                    1 -> {
+                        println("SSH_KNOWN_HOSTS_OK")
+                    }
+                    0 -> {
+                        println("SSH_KNOWN_HOSTS_UNKNOWN")
+                    }
                     -2 -> throw Exception("ssh_session_is_known_server SSH_KNOWN_HOSTS_ERROR $this")
                     -1 -> throw Exception("ssh_session_is_known_server SSH_KNOWN_HOSTS_NOT_FOUND $this")
                     else -> throw Exception("ssh_session_is_known_server $this")
@@ -121,7 +125,7 @@ actual suspend fun Ssh.exec(cmd: String): SshResult {
 
             val buffer = ByteArray(256)
             val rbytes = ssh_channel_read(channel, buffer.refTo(0), buffer.size.toUInt(), 0);
-
+            ssh_channel_close(channel)
             ssh_disconnect(session);
             ssh_free(session);
             ssh_finalize();
