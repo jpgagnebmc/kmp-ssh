@@ -14,7 +14,7 @@ import kotlin.test.*
 class TestSsh : CoroutineScope by GlobalScope {
     @Test
     fun helloWorld() = runBlockingCommon {
-        val config = Json.decodeFromString(TestSshConfig.serializer(), File("~/.affair/TestSshConfig.json").readText())
+        val config = Json.decodeFromString(TestSshConfig.serializer(), File("${Env.userHome}/.affair/TestSshConfig.json").readText())
         println("helloWorld START $config")
 
         val client = Ssh(
