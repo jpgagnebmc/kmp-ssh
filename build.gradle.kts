@@ -5,11 +5,11 @@ plugins {
     id("maven-publish")
 }
 
-group = "baremetalcloud.kmp-ssh"
+group = "com.baremetalcloud.kmp-ssh"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    mavenLocal()
+    maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/")
     mavenCentral()
 }
 val mingwPath = File(System.getenv("MINGW64_DIR") ?: "C:/msys64/mingw64")
@@ -40,49 +40,14 @@ kotlin {
         isMingwX64 -> mingwX64("native")
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
-//    nativeTarget.apply {
-//        binaries {
-//            executable {
-//                entryPoint = "main"
-//                if (isMingwX64) {
-//                    // Add lib path to `libcurl` and its dependencies:
-//                    linkerOpts("-L${mingwPath.resolve("lib")}")
-//                    runTask?.environment("PATH" to mingwPath.resolve("bin"))
-//                }
-////                runTask?.args("https://www.jetbrains.com/")
-//            }
-//        }
-//
-//        compilations["main"].cinterops {
-//            val main by compilations.getting
-//            val libssh by main.cinterops.creating {
-//                when (preset) {
-//////                    presets["macosX64"] -> includeDirs.headerFilterOnly("/opt/local/include", "/usr/local/include")
-//                    presets["linuxX64"] -> includeDirs.headerFilterOnly("/usr/local/include", "/usr/local/lib")
-//////                    presets["mingwX64"] -> includeDirs.headerFilterOnly(mingwPath.resolve("include"))
-//                }
-//            }
-//        }
-
-//        mavenPublication {
-//            pom {
-//                withXml {
-//                    val root = asNode()
-//                    root.appendNode("name", "libssh interop library")
-//                    root.appendNode("description", "A library providing interoperability with host libssh")
-//                }
-//            }
-//        }
-//    }
-
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
-                implementation("baremetalcloud:kmp-runblocking:1.0-SNAPSHOT")
-                implementation("baremetalcloud:kmp-file:1.0-SNAPSHOT")
+                implementation("com.baremetalcloud:kmp-runblockingcommon:1.0-SNAPSHOT")
+                implementation("com.baremetalcloud:kmp-file:1.0-SNAPSHOT")
 
             }
         }
@@ -118,11 +83,8 @@ kotlin {
             }
         }
         val nativeMain by getting {
-
             dependencies {
-                implementation("baremetalcloud:libssh:1.4-SNAPSHOT")
-//                implementation(files("/home/jp/baremetalcloud/libssh/build/libs/native/main/libssh-cinterop-libssh.klib"))
-
+                implementation("com.baremetalcloud:libssh:0.9.5-SNAPSHOT")
             }
         }
         val nativeTest by getting

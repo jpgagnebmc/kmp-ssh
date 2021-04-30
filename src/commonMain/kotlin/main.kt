@@ -1,7 +1,8 @@
-import baremetalcloud.kmpfile.File
-import baremetalcloud.kmpfile.readText
-import baremetalcloud.kmpssh.*
-import baremetalcloud.runblocking.runBlockingCommon
+
+import baremetalcloud.runblockingcommon.runBlockingCommon
+import com.baremetalcloud.kmpfile.File
+import com.baremetalcloud.kmpfile.readText
+import com.baremetalcloud.kmpssh.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -16,8 +17,8 @@ fun main(args: Array<String>) {
             Json.decodeFromString(TestSshConfig.serializer(), File("/home/jp/.affair/TestSshConfig.json").readText())
         println("helloWorld START $config")
 
-        val client = Ssh(
-            host = SshHostImpl(hostname = config.hostname),
+        val client = com.baremetalcloud.kmpssh.Ssh(
+            host = com.baremetalcloud.kmpssh.SshHostImpl(hostname = config.hostname),
             identity = SshIdentity.Password(username = config.username, password = config.password),
             options = SshOptionsImpl(),
         )
